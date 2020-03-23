@@ -35,8 +35,8 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-   
-        next()
+   console.log(to, from)
+   next()    
    
 
 

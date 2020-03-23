@@ -1,11 +1,14 @@
 <template>
 <div class="page">
     <div class="login">  
-        <h1>Kullanıcı Bilgileri</h1>      
+        <h1>Giriş Yap</h1>      
         <ul>
            <li><p>Kullanıcı Adı:</p><input type="text"/></li>
            <li><p>Şifre:</p><input type="password"/></li>
         </ul>          
+    </div>
+    <div class="footerInfo">
+        <p>Bu proje Enes Karali tarafından, Kartaca "Çekirdekten Yetişenler Programı" için geliştirilmiştir. </p>
     </div>
 </div>
 </template>
@@ -20,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-p{
+.login p{
     float: left;   
     font-size: 22px;
     margin:2px;
@@ -59,15 +62,30 @@ input{
     display: inline-block;
     
 }
+.footerInfo{
+    position: fixed;
+    bottom: 5px;
+    width: 100%;
+}
+.footerInfo p{
+    color: #235825;
+    font-size: 16px;
+}
 
 .page{
     text-align: center;
 }
 @media(max-width: 800px){
-    input{
-        width: 320px;
+    .login{
+        width: 350px;
+        
     }
 
+    .footerInfo p{
+        color: #235825;
+        margin: 0;
+        font-size: 12px;
+}
 }
 
 
