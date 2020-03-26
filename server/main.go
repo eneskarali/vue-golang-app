@@ -5,11 +5,11 @@ import (
 	"net/http"
 )
 
-func main()  {
+func main() {
 
-	http.HandleFunc("/signin",Signin)
-	//http.HandleFunc("/dashboard",Dashboard)
-	//http.HandleFunc("/refresh",Refresh)
+	http.HandleFunc("/signin", signin)
+	http.HandleFunc("/youValid", youValidUser)
+	http.HandleFunc("/refresh", refreshToken)
 
-	log.Fatal(http.ListenAndServe(":8000",nil))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }

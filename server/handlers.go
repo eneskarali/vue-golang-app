@@ -33,7 +33,7 @@ type userClaims struct {
 	jwt.StandardClaims
 }
 
-func Signin(w http.ResponseWriter, r *http.Request) {
+func signin(w http.ResponseWriter, r *http.Request) {
 
 	setupResponse(&w, r)
 	if (*r).Method == "OPTIONS" {
@@ -119,4 +119,56 @@ func youValidUser(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username))) // tüm kontroller basarili sekilde tamamlanilirsa welcome mesajı gonder
 
+}
+
+func refreshToken(w http.ResponseWriter, r *http.Request) {
+
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized) //oturum sona ermis
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest) //istek hatali
+		return
+	}
+	tokenText := cookie.Value
+	claims := &userClaims{}
+	tkn, err := jwt.ParseWithClaims(tokenText, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	if err != nil {
+		if err == jwt.ErrSignatureInvalid {
+			w.WriteHeader(http.StatusUnauthorized) // tokenin imzası gecerli degilse oturum sona ermis
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if !tkn.Valid {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 30*time.Second {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	//süresi güncellenmis yeni bir token olustur
+	expirationTime := time.Now().Add(5 * time.Minute)
+	claims.ExpiresAt = expirationTime.Unix()
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// olusturulan yeni token i cookie olarak client a ekle
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
 }
