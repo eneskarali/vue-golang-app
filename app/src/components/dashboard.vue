@@ -1,5 +1,7 @@
 <template>
 <div class="page">
+
+  <h1>DASHBOARD</h1>
 </div>
 </template>
 

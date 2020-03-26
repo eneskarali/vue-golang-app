@@ -5,7 +5,9 @@
         <ul>
            <li><p>Kullanıcı Adı:</p><input type="text"/></li>
            <li><p>Şifre:</p><input type="password"/></li>
-        </ul>          
+           <li> <div class="button" v-on:click="change"><b>GİRİŞ YAP    </b></div></li>
+        </ul>
+              
     </div>
     <div class="footerInfo">
         <p>Bu proje Enes Karali tarafından, Kartaca "Çekirdekten Yetişenler Programı" için geliştirilmiştir. </p>
@@ -14,11 +16,40 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'loginPage',
   props: {
     msg: String
-  }
+  },
+  methods:{
+    change(){
+
+        const params = {
+            "username": "user1",
+            "password": "password1"
+        };
+        axios
+        .post(
+            "http://localhost:8000/signin",
+            params,
+            {withCredentials: true },
+            {
+                headers:{
+                'content-type': 'application/json',
+                }
+            }
+        )
+        .then(response => {
+            console.log(response.headers['token'])
+            
+        })  
+     // this.$router.push('dashboard')
+
+
+    }
+}
 }
 </script>
 
@@ -75,6 +106,30 @@ input{
 .page{
     text-align: center;
 }
+
+.button {
+    color: #ffffff !important;
+    background: #000000;
+    margin-bottom: 0;
+    padding: 15px;
+    border: 4px solid #494949 !important;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 18px;
+    margin:2px;
+    color: black;
+    font: bold;
+    }
+
+
+.button:hover {
+    color: #4caf50  !important;
+    border-radius: 50px;
+    transition: all 0.5s ease 0s;
+}
+
 @media(max-width: 800px){
     .login{
         width: 350px;
