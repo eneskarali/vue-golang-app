@@ -11,33 +11,60 @@ let router = new Router({
     mode: 'history',
     routes: [
         {
-            path: '/',
+            path: '/hello',
             name: 'HelloWorld',
             component: HelloWorld,
-        },
-        {
-            path: '/login',
-            name:'loginPage',
-            component: loginPage,
             meta: {
-                guest:true
+                guest: true
             }
         },
         {
-            path: '/dashboard',
+            path: '/login',
+            name: 'loginPage',
+            component: loginPage,
+        },
+        {
+            path: '/',
             name: 'dashboard',
             component: dashboard,
-            meta:{
+            meta: {
                 requiresAuth: true
             }
         }
     ]
 })
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return null
+}
 
 router.beforeEach((to, from, next) => {
-   console.log("sa")
-   next()    
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (getCookie('token') == null) {
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            })
+        } else {
+            let token = getCookie('token')
+            console.log(token)
+            next()
+        }
+    } else {
+        next()
+    }
 
 })
 

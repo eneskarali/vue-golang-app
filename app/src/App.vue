@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/login_icon.png" width="200" height="200">
-    <router-view/>
+    <img alt="Vue logo" src="./assets/login_icon.png" width="200" height="200" />
+    <router-view />
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 
 <style>
