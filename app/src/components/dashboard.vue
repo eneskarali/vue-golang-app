@@ -1,14 +1,18 @@
 <template>
   <div class="page">
-    <h1>DASHBOARD</h1>
+    <headerComp></headerComp>
   </div>
 </template>
 
 <script>
+import headerComp from './headerComp.vue'
 export default {
   name: "dashboard",
   props: {
     msg: String
+  },
+  components:{
+    headerComp
   }
 };
 </script>

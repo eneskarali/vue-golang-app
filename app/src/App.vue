@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/login_icon.png" width="200" height="200" />
-    <router-view />
+    <router-view class="rooter" />
   </div>
 </template>
 
@@ -18,6 +17,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.router {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  margin: 0;
 }
 </style>

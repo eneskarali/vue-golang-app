@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <img src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200"><br/>
     <div class="login">
       <h1>Giriş Yap</h1>
       <ul>
@@ -50,11 +51,11 @@ export default {
           }
         )
         .then(response => {
-          console.log(response);
-          this.$router.push("dashboard");
+          console.log('OK!'+response);
+          this.$router.push("/");
         })
         .catch(err => {
-          console.log("service unable" + err);
+          console.log("sing in service unable:" + err);
         });
     }
   }
@@ -94,7 +95,7 @@ input {
   font-size: 20px;
 }
 .login {
-  margin-top: 70px;
+  margin-top: 50px;
   text-align: center;
   width: 550px;
   display: inline-block;
