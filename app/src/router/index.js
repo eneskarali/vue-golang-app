@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '@/components/helloWorld'
 import loginPage from '@/components/loginPage'
 import dashboard from '@/components/dashboard'
-
+import axios from 'axios'
 
 Vue.use(Router)
 
@@ -12,7 +12,7 @@ let router = new Router({
     routes: [
         {
             path: '/hello',
-            name: 'HelloWorld',
+            name: 'helloWorld',
             component: HelloWorld,
             meta: {
                 guest: true
@@ -58,9 +58,23 @@ router.beforeEach((to, from, next) => {
                 params: { nextUrl: to.fullPath }
             })
         } else {
-            let token = getCookie('token')
-            console.log(token)
-            next()
+            axios
+                .get(
+                "http://localhost:8000/youValid",
+                { withCredentials: true }
+                )
+                .then(response => {
+                    if(response.status == 200){
+                        next()
+                    }
+                })
+                .catch(err => {
+                    console.log("validation service unable: " + err);
+                    next({
+                        path: '/login',
+                        params: { nextUrl: to.fullPath }
+                    })
+                });
         }
     } else {
         next()
