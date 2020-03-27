@@ -84,6 +84,11 @@ func signin(w http.ResponseWriter, r *http.Request) {
 
 func youValidUser(w http.ResponseWriter, r *http.Request) {
 
+	setupResponse(&w, r)
+	if (*r).Method == "OPTIONS" {
+		return
+	}
+
 	cookieToken, err := r.Cookie("token")
 
 	if err != nil {
@@ -122,6 +127,11 @@ func youValidUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func refreshToken(w http.ResponseWriter, r *http.Request) {
+
+	setupResponse(&w, r)
+	if (*r).Method == "OPTIONS" {
+		return
+	}
 
 	cookie, err := r.Cookie("token")
 	if err != nil {
