@@ -1,20 +1,20 @@
 <template>
   <div class="page">
-    <img src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200"><br/>
+    <img class = "logo" src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200"><br/>
     <div class="login">
-      <h1>Giriş Yap</h1>
+      <h1>Sing In</h1>
       <ul>
         <li>
-          <p>Kullanıcı Adı:</p>
+          <p>User Name:</p>
           <input type="text" />
         </li>
         <li>
-          <p>Şifre:</p>
+          <p>Password:</p>
           <input type="password" />
         </li>
         <li>
           <div class="button" v-on:click="change">
-            <b>GİRİŞ YAP</b>
+            <b>Sing In</b>
           </div>
         </li>
       </ul>
@@ -134,6 +134,10 @@ input {
   color: #4caf50 !important;
   border-radius: 50px;
   transition: all 0.5s ease 0s;
+}
+
+.logo{
+  margin-top: 50px;
 }
 
 @media (max-width: 800px) {
