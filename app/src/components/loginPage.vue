@@ -6,7 +6,7 @@
       <h1>Sing In</h1>
       <ul>
         <li>
-          <p>User Name:</p>
+          <p>Username:</p>
           <input type="text" />
         </li>
         <li>

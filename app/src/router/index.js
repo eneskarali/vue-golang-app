@@ -60,11 +60,11 @@ router.beforeEach((to, from, next) => {
         } else {
             axios
                 .get(
-                "http://localhost:8000/youValid",
-                { withCredentials: true }
+                    "http://localhost:8000/youValid",
+                    { withCredentials: true }
                 )
                 .then(response => {
-                    if(response.status == 200){
+                    if (response.status == 200) {
                         next()
                     }
                 })

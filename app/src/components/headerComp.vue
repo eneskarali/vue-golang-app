@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <img class="logo" src="@/assets/login_icon.png" alt="Vue Logo" width="50" height="auto" />
-    <h2>DASHBOARD</h2>
+    <h1>timeline</h1>
   </div>
 </template>
 
@@ -18,28 +18,15 @@ export default {
 .header {
   padding: 5px 5px;
   padding-bottom: 55px;
-  background: rgba(89, 177, 54, 0.904);
+  background: rgba(89, 177, 54, 0.88);
   color: #000000;
   width: 100% - 5px;
 }
-
-.content {
-  padding: 10px;
-}
-h2 {
+h1 {
   position: absolute;
   left: 50%;
   margin-left: -80px;
-  margin-top: 10px;
-}
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-.sticky + .content {
-  padding-top: 102px;
+  margin-top: 7px;
 }
 
 .logo {
