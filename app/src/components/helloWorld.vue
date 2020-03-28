@@ -38,12 +38,11 @@ li {
 a {
   color: #42b983;
 }
-.logo{
+.logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
   width: auto;
-
 }
 </style>

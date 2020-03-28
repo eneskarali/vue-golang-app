@@ -1,6 +1,7 @@
 <template>
   <div class="page">
-    <img class = "logo" src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200"><br/>
+    <img class="logo" src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200" />
+    <br />
     <div class="login">
       <h1>Sing In</h1>
       <ul>
@@ -51,7 +52,7 @@ export default {
           }
         )
         .then(response => {
-          console.log('OK!'+response);
+          console.log("OK!" + response);
           this.$router.push("/");
         })
         .catch(err => {
@@ -136,7 +137,7 @@ input {
   transition: all 0.5s ease 0s;
 }
 
-.logo{
+.logo {
   margin-top: 50px;
 }
 

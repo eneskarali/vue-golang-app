@@ -1,6 +1,6 @@
 <template>
-  <div class="header" >
-    <img class = "logo" src="@/assets/login_icon.png" alt="Vue Logo" width="50" height="auto">
+  <div class="header">
+    <img class="logo" src="@/assets/login_icon.png" alt="Vue Logo" width="50" height="auto" />
     <h2>DASHBOARD</h2>
   </div>
 </template>
@@ -15,7 +15,6 @@ export default {
 </script>
 
 <style  scoped>
-
 .header {
   padding: 5px 5px;
   padding-bottom: 55px;
@@ -27,24 +26,23 @@ export default {
 .content {
   padding: 10px;
 }
-h2{
-    position: absolute;
-    left: 50%;
-    margin-left: -80px;
-    margin-top: 10px;
+h2 {
+  position: absolute;
+  left: 50%;
+  margin-left: -80px;
+  margin-top: 10px;
 }
 
 .sticky {
   position: fixed;
   top: 0;
-  width: 100%
+  width: 100%;
 }
 .sticky + .content {
   padding-top: 102px;
 }
 
-.logo{
-    float: left;
+.logo {
+  float: left;
 }
-
 </style>
