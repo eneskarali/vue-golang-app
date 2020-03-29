@@ -3,7 +3,7 @@
     <div class="modal-content">
       <h1>add new post</h1>
       <h3>write something and share it...</h3>
-      <input type="text" name="postText" id="postText" class="postInput" />
+      <textarea type="text" name="postText" id="postText" class="postInput" autofocus placeholder="type here..." />
       <div class="button" v-on:click="deleteOnClick">
         <p>
           <b>share</b>
@@ -41,17 +41,36 @@ export default {
   border: 1px solid #888;
   width: 50%;
   height: 380px;
+  border-radius: 10px;
 }
 h3 {
   float: left;
   margin-top: 10px;
+  margin-left: 8px;
 }
 .postInput {
   display: block;
   margin-top: 40px;
-  height: 50%;
-  width: 100%;
+  height: 47%;
+  width: 98%;
+  cursor: pointer;
+  overflow: auto;
+  font-size: 16px;
+  font: helvatica;
+  border: 1px solid #8cd48f;
+  border-radius:10px ;
+  padding: 1%;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+.postInput::placeholder{
+    margin: 10px;
+}
+
+.postInput:focus{
+    outline: none;
+}
+
 .button {
   color: #ffffff !important;
   background: #4caf50;

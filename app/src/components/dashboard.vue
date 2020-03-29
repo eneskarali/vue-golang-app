@@ -25,7 +25,7 @@
                 <br />
                 <p
                   class="postText"
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada tempus porttitor. Sed id eros maximus ex mollis condimentum vitae ut magna. Morbi porta dignissim odio at porttitor. Nullam diam mauris, blandit sit amet rhoncus aliquet, hendrerit ut quam. Morbi vitae ornare lectus. Vivamus ut imperdiet turpis. AliquLorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada tempus porttitor. Sed id eros maximus ex mollis condimentum vitae ut magna. Morbi porta dignissim odio at porttitor. Nullam diam mauris, blandit sit amet rhoncus aliquet, hendrerit ut quam. Morbi vitae ornare lectus. Vivamus ut imperdiet turpis. Aliquam id imperdiet arcu. Etiam bibendum placerat odio, nec bibendum metus dictum nec. Nullam viverra varius condimentum. Integer suscipit elit et libero gravida, ut dapibus est faucibus. Cras porttitor egestas ante, tincidunt cursus augue tristique at. Pellentesque rhoncus, nisl et dictum vehicula, diam urna aliquam lectus, vel cursus nibh felis sed lectus. Mauris vehicula pharetra nulla, vel tincidunt augue egestas at. Morbi eget vestibulum ipsum.am id imperdiet arcu. Etiam bibendum placerat odio, nec bibendum metus dictum nec. Nullam viverra varius condimentum. Integer suscipit elit et libero gravida, ut dapibus est faucibus. Cras porttitor egestas ante, tincidunt cursus augue tristique at. Pellentesque rhoncus, nisl et dictum vehicula, diam urna aliquam lectus, vel cursus nibh felis sed lectus. Mauris vehicula pharetra nulla, vel tincidunt augue egestas at. Morbi eget vestibulum ipsum.</p>
+                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada tempu rhoncus, nisl et dictum vehicula, diam urna aliquam  metus dictum nec. Nullam viverra varius condimentum. Pellentesque rhoncus, nisl et dictum vehicula, diam urna aliquam lectus, vel cursus nibh felis sed lectus. Mauris vehicula pharetra nulla, vel tincidunt augue egestas at. Morbi eget vestibulum ipsum.</p>
               </div>
             </div>
           </template>
@@ -35,7 +35,7 @@
     <div class="button" v-on:click="addClicked">
       <img class="add_icon" src="@/assets/add_icon.png" alt="add icon" width="34px" height="34px" />
       <p class="add_text">
-        <b>ADD</b>
+        <b>ADD POST</b>
       </p>
     </div>
     <div id="addPost" class="addPostModal">
@@ -203,17 +203,18 @@ export default {
 .scrollList {
   margin-top: 35px;
 }
-.post {
+.Post {
   float: left;
+
 }
 
 .postText {
   display: block;
-  float: left;
+  text-align: left;
   margin-top: 0px;
   margin-left: 40px;
-  margin-right: 10px;
-  padding-bottom: 25px;
+  margin-right: 35px;
+  padding-bottom: 35px;
 }
 .addPostModal {
   display: none; /* Hidden by default */
