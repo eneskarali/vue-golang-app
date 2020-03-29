@@ -174,7 +174,6 @@ func refreshToken(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
 	// olusturulan yeni token i cookie olarak client a ekle
 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",
