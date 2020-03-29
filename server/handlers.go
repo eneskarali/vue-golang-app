@@ -18,11 +18,6 @@ func setupResponse(w *http.ResponseWriter, req *http.Request) {
 
 var jwtKey = []byte("keep_life_simple")
 
-var users = map[string]string{
-	"user1": "password1",
-	"user2": "password2",
-}
-
 type UserCredentials struct {
 	Password string `json:"password"`
 	Username string `json:"username"`
@@ -30,6 +25,7 @@ type UserCredentials struct {
 
 type userClaims struct {
 	Username string `json:"username"`
+	Name     string `json:"name"`
 	jwt.StandardClaims
 }
 
@@ -50,7 +46,9 @@ func signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	expectedPassword, ok := users[userCreds.Username]
+	userFromDb := getUser(userCreds.Username)
+
+	expectedPassword, ok := userFromDb["password"]
 
 	//kullanıcı adı bulunamadiginda veya sifre ile eslesmediginde unauthorized status dondur
 	if !ok || expectedPassword != userCreds.Password {
@@ -61,7 +59,8 @@ func signin(w http.ResponseWriter, r *http.Request) {
 	expirationTime := time.Now().Add(5 * time.Minute)
 
 	claims := &userClaims{
-		Username: userCreds.Username,
+		Username: userFromDb["username"],
+		Name:     userFromDb["name"],
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(), // exipry time JTW de unix milisaniye cinsinden isteniyor
 		},
@@ -122,7 +121,7 @@ func youValidUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username))) // tüm kontroller basarili sekilde tamamlanilirsa welcome mesajı gonder
+	w.Write([]byte(fmt.Sprintf(claims.Name))) // tüm kontroller basarili sekilde tamamlanilirsa welcome mesajı gonder
 
 }
 

@@ -37,8 +37,8 @@ export default {
   methods: {
     change() {
       const params = {
-        username: "user1",
-        password: "password1"
+        username: "eneskarali",
+        password: "123456"
       };
       axios
         .post(

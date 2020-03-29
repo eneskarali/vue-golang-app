@@ -2,7 +2,7 @@
   <div class="page">
     <headerComp class="header"></headerComp>
     <div class="content">
-      <h1 class="title">welcome enes</h1>
+      <h1 class="title">welcome {{activeUserName}} </h1>
       <br />
       <div class="scrollList">
         <Scroll-view>
@@ -58,11 +58,14 @@ export default {
     headerComp,
     addPostModalComp
   },
+
+
   data() {
     return {
       page: 1,
       items: [],
-      loading: true
+      loading: true,
+      activeUserName : ''
     };
   },
   watch: {
@@ -114,6 +117,10 @@ export default {
       var modal = document.getElementById("addPost")
       if(event.target == modal )
         modal.style.display = "none"
+    }
+
+    if(localStorage.name){
+      this.activeUserName = localStorage.name
     }
   }
 };
