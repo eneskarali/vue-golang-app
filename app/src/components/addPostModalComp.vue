@@ -3,8 +3,15 @@
     <div class="modal-content">
       <h1>add new post</h1>
       <h3>write something and share it...</h3>
-      <textarea type="text" name="postText" id="postText" class="postInput" autofocus placeholder="type here..." />
-      <div class="button" v-on:click="deleteOnClick">
+      <textarea
+        type="text"
+        name="postText"
+        id="postText"
+        class="postInput"
+        autofocus
+        placeholder="type here..."
+      />
+      <div class="button" v-on:click="shareOnClick">
         <p>
           <b>share</b>
         </p>
@@ -19,6 +26,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "appPostModalComp",
   props: {
@@ -27,7 +36,39 @@ export default {
   methods: {
     deleteOnClick() {
       var modal = document.getElementById("addPost");
+      document.getElementById("postText").value = "";
       modal.style.display = "none";
+    },
+    shareOnClick() {
+      var posttext = document.getElementById("postText").value;
+      console.log(localStorage.username);
+
+      const params = {
+        postBy: localStorage.username,
+        posttext: posttext
+      };
+      axios
+        .post(
+          "http://localhost:8000/addpost",
+          params,
+          { withCredentials: true },
+          {
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          if (response.status == 200) {
+            var modal = document.getElementById("addPost");
+            document.getElementById("postText").value = "";
+            modal.style.display = "none";
+            console.log(response);
+          }
+        })
+        .catch(err => {
+          console.log("add post service unable:" + err);
+        });
     }
   }
 };
@@ -58,17 +99,17 @@ h3 {
   font-size: 16px;
   font: helvatica;
   border: 1px solid #8cd48f;
-  border-radius:10px ;
+  border-radius: 10px;
   padding: 1%;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.postInput::placeholder{
-    margin: 10px;
+.postInput::placeholder {
+  margin: 10px;
 }
 
-.postInput:focus{
-    outline: none;
+.postInput:focus {
+  outline: none;
 }
 
 .button {
@@ -119,14 +160,14 @@ h3 {
 }
 
 @media (max-width: 800px) {
-  .modal-content{
-      width: 80%;
+  .modal-content {
+    width: 80%;
   }
-  .delButton{
-      margin-left: 70%;
+  .delButton {
+    margin-left: 70%;
   }
-  .button{
-      margin-left: 70%;
+  .button {
+    margin-left: 70%;
   }
 }
 </style>
