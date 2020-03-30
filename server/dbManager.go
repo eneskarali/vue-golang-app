@@ -29,7 +29,7 @@ func getUser(uname string) map[string]string {
 			break
 		}
 	}
-
+	user.Close()
 	db.Close()
 
 	userCreds := make(map[string]string)
@@ -40,6 +40,24 @@ func getUser(uname string) map[string]string {
 	userCreds["postCount"] = strconv.Itoa(postCount)
 
 	return userCreds
+
+}
+
+func createPost(postBy string, postText string, date int64) {
+
+	db, err := sql.Open("sqlite3", "database")
+	checkErr(err)
+
+	stat, err := db.Prepare("INSERT INTO post(postBy, postText, date) values(?,?,?)")
+	checkErr(err)
+
+	res, err := stat.Exec(postBy, postText, date)
+	checkErr(err)
+
+	id, err := res.LastInsertId()
+	checkErr(err)
+
+	fmt.Println(id)
 
 }
 

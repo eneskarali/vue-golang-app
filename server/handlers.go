@@ -29,6 +29,11 @@ type userClaims struct {
 	jwt.StandardClaims
 }
 
+type post struct {
+	PostBy   string `json:"postby"`
+	PostText string `json:"posttext"`
+}
+
 func signin(w http.ResponseWriter, r *http.Request) {
 
 	setupResponse(&w, r)
@@ -121,7 +126,11 @@ func youValidUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte(fmt.Sprintf(claims.Name))) // tüm kontroller basarili sekilde tamamlanilirsa welcome mesajı gonder
+	returnVal := map[string]string{"username": claims.Username, "name": claims.Name}
+
+	jsonRetVal, _ := json.Marshal(returnVal)
+
+	w.Write(jsonRetVal) // tüm kontroller basarili sekilde tamamlanilirsa welcome mesajı gonder
 
 }
 
@@ -159,7 +168,7 @@ func refreshToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 30*time.Second {
+	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 120*time.Second {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -179,4 +188,27 @@ func refreshToken(w http.ResponseWriter, r *http.Request) {
 		Value:   tokenString,
 		Expires: expirationTime,
 	})
+}
+
+func addPost(w http.ResponseWriter, r *http.Request) {
+
+	setupResponse(&w, r)
+	if (*r).Method == "OPTIONS" {
+		return
+	}
+
+	var newPost post
+
+	err := json.NewDecoder(r.Body).Decode(&newPost)
+	if err != nil {
+		//json body hatali gelirse badrequest dondur
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	date := time.Now().Unix()
+
+	createPost(newPost.PostBy, newPost.PostText, date)
+
+	w.Write([]byte(fmt.Sprintf(newPost.PostBy)))
+
 }
