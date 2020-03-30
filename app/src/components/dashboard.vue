@@ -2,7 +2,7 @@
   <div class="page">
     <headerComp class="header"></headerComp>
     <div class="content">
-      <h1 class="title">welcome {{activeUserName}} </h1>
+      <h1 class="title">welcome {{activeUserName}}</h1>
       <br />
       <div class="scrollList">
         <Scroll-view>
@@ -10,14 +10,13 @@
             <div
               class="scrollViewItem"
               v-for="i in items"
-              :src="i.url"
-              :key="i.id"
+              :key="i.date"
               :visibile="visibility"
             >
-              <div class="headInfo">
+              <div  class="headInfo">
                 <img class="pp" src="@/assets/user_pp.png" alt="pp" width="40" height="40" />
                 <p class="name">
-                  <b>Enes Karali</b>
+                  <b>{{i.name}} {{i.surname}}</b>
                 </p>
               </div>
               <br />
@@ -25,7 +24,7 @@
                 <br />
                 <p
                   class="postText"
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada tempu rhoncus, nisl et dictum vehicula, diam urna aliquam  metus dictum nec. Nullam viverra varius condimentum. Pellentesque rhoncus, nisl et dictum vehicula, diam urna aliquam lectus, vel cursus nibh felis sed lectus. Mauris vehicula pharetra nulla, vel tincidunt augue egestas at. Morbi eget vestibulum ipsum.</p>
+                >{{i.postText}}</p>
               </div>
             </div>
           </template>
@@ -59,13 +58,14 @@ export default {
     addPostModalComp
   },
 
-
   data() {
     return {
       page: 1,
       items: [],
       loading: true,
-      activeUserName : ''
+      activeUserName: "",
+      to: 10,
+      from: 0
     };
   },
   watch: {
@@ -79,11 +79,25 @@ export default {
   methods: {
     fetchMore() {
       this.loading = true;
+      const params = {
+        from: this.from,
+        to: this.to
+      };
       axios
-        .get(`https://jsonplaceholder.typicode.com/albums/${this.page}/photos`)
+        .post(
+          "http://localhost:8000/get10post",
+          params,
+          { withCredentials: true },
+          {
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        )
         .then(({ data }) => {
           this.loading = true;
-          this.items = this.items.concat(data.slice(1, 6));
+          console.log(data)
+          this.items = this.items.concat(data.slice(0, 7));
         })
         .catch(e => {
           this.loading = false;
@@ -106,21 +120,20 @@ export default {
         }
       };
     },
-    addClicked(){
-      var addModal = document.getElementById("addPost") 
-      addModal.style.display = "block"
+    addClicked() {
+      var addModal = document.getElementById("addPost");
+      addModal.style.display = "block";
     }
   },
   mounted() {
     this.scroll();
-    window.onclick = function(event){
-      var modal = document.getElementById("addPost")
-      if(event.target == modal )
-        modal.style.display = "none"
-    }
+    window.onclick = function(event) {
+      var modal = document.getElementById("addPost");
+      if (event.target == modal) modal.style.display = "none";
+    };
 
-    if(localStorage.name){
-      this.activeUserName = localStorage.name
+    if (localStorage.name) {
+      this.activeUserName = localStorage.name.toLowerCase().trim();
     }
   }
 };
@@ -212,7 +225,6 @@ export default {
 }
 .Post {
   float: left;
-
 }
 
 .postText {
@@ -234,7 +246,7 @@ export default {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(17, 17, 17, 0.5); 
+  background-color: rgba(17, 17, 17, 0.5);
 }
 .close {
   color: #aaaaaa;
@@ -258,7 +270,7 @@ export default {
     bottom: 2%;
     right: 1%;
   }
-  .addPostModal{
+  .addPostModal {
     padding-top: 45%;
   }
 }

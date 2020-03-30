@@ -34,6 +34,11 @@ type post struct {
 	PostText string `json:"posttext"`
 }
 
+type getPostCredentials struct {
+	From int `json:"from"`
+	To   int `json:"to"`
+}
+
 func signin(w http.ResponseWriter, r *http.Request) {
 
 	setupResponse(&w, r)
@@ -211,4 +216,29 @@ func addPost(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(fmt.Sprintf(newPost.PostBy)))
 
+}
+
+func get10Post(w http.ResponseWriter, r *http.Request) {
+
+	setupResponse(&w, r)
+	if (*r).Method == "OPTIONS" {
+		return
+	}
+
+	var getPostCred getPostCredentials
+
+	err := json.NewDecoder(r.Body).Decode(&getPostCred)
+	if err != nil {
+		//json body hatali gelirse badrequest dondur
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var posts [10]map[string]string
+
+	posts = getPost(getPostCred.From, getPostCred.To)
+
+	jsonRetVal, _ := json.Marshal(posts)
+
+	w.Write(jsonRetVal)
 }
