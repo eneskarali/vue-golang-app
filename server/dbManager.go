@@ -64,53 +64,39 @@ func createPost(postBy string, postText string, date int64) {
 
 }
 
-func getPost(from int, to int) [10]map[string]string {
+func getPost(from int, to int) []postInfo {
 
 	db, err := sql.Open("sqlite3", "database")
 	checkErr(err)
 
-	post, err := db.Query("select * from post order by date desc limit " + strconv.Itoa(to) + " offset " + strconv.Itoa(from) + "")
+	post, err := db.Query("select postBy, postText, date from post order by date desc limit " + strconv.Itoa(to) + " offset " + strconv.Itoa(from) + "")
 	checkErr(err)
 
 	var username string
-	var password string
+	var name string
+	var surname string
 	var postCount int
-	var postId int
 	var postBy string
 	var postText string
 	var date int
-	var name string
-	var surname string
 
-	var posts [10]map[string]string
-	var i int = 0
+	var posts []postInfo
 
 	for post.Next() {
-		err = post.Scan(&postId, &postBy, &postText, &date)
+		err = post.Scan(&postBy, &postText, &date)
 
-		user, err := db.Query("SELECT * FROM user")
+		user, err := db.Query("SELECT username, name, surname, postCount FROM user")
 		checkErr(err)
 
 		for user.Next() {
-			err = user.Scan(&username, &password, &name, &surname, &postCount)
+			err = user.Scan(&username, &name, &surname, &postCount)
 			if username == postBy {
 				break
 			}
 		}
 		user.Close()
 
-		postCreds := make(map[string]string)
-		postCreds["name"] = name
-		postCreds["surname"] = surname
-		postCreds["postText"] = postText
-		postCreds["date"] = strconv.Itoa(date)
-		postCreds["postCount"] = strconv.Itoa(postCount)
-
-		posts[i] = postCreds
-		i += 1
-		if i == 10 {
-			break
-		}
+		posts = append(posts, postInfo{name, surname, postText, date, postCount})
 	}
 	post.Close()
 	db.Close()

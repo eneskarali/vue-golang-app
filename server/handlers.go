@@ -39,6 +39,14 @@ type getPostCredentials struct {
 	To   int `json:"to"`
 }
 
+type postInfo struct {
+	Name      string `json:"name"`
+	Surname   string `json:"surname"`
+	PostText  string `json:"posttext"`
+	Date      int    `json:"date"`
+	PostCount int    `json:"postcount"`
+}
+
 func signin(w http.ResponseWriter, r *http.Request) {
 
 	setupResponse(&w, r)
@@ -234,7 +242,7 @@ func get10Post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var posts [10]map[string]string
+	var posts []postInfo
 
 	posts = getPost(getPostCred.From, getPostCred.To)
 

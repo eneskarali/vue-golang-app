@@ -63,7 +63,7 @@ export default {
             var modal = document.getElementById("addPost");
             document.getElementById("postText").value = "";
             modal.style.display = "none";
-            console.log(response);
+            location.reload()
           }
         })
         .catch(err => {

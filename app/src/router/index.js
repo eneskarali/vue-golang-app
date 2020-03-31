@@ -67,7 +67,6 @@ router.beforeEach((to, from, next) => {
                     if (response.status == 200) {
                         localStorage.setItem('name',response.data.name)
                         localStorage.setItem('username',response.data.username)
-                        console.log(response.data)
                         next()
                     }
                 })

@@ -5,15 +5,10 @@
       <h1 class="title">welcome {{activeUserName}}</h1>
       <br />
       <div class="scrollList">
-        <Scroll-view>
+        <Scroll-view id="scrollViewParent">
           <template slot-scope="visibility">
-            <div
-              class="scrollViewItem"
-              v-for="i in items"
-              :key="i.date"
-              :visibile="visibility"
-            >
-              <div  class="headInfo">
+            <div class="scrollViewItem" v-for="i in items" :key="i.date" :visibile="visibility">
+              <div class="headInfo">
                 <img class="pp" src="@/assets/user_pp.png" alt="pp" width="40" height="40" />
                 <p class="name">
                   <b>{{i.name}} {{i.surname}}</b>
@@ -21,10 +16,7 @@
               </div>
               <br />
               <div class="Post">
-                <br />
-                <p
-                  class="postText"
-                >{{i.postText}}</p>
+                <p class="postText">{{i.posttext}}</p>
               </div>
             </div>
           </template>
@@ -62,7 +54,6 @@ export default {
     return {
       page: 1,
       items: [],
-      loading: true,
       activeUserName: "",
       to: 10,
       from: 0
@@ -78,7 +69,6 @@ export default {
   },
   methods: {
     fetchMore() {
-      this.loading = true;
       const params = {
         from: this.from,
         to: this.to
@@ -95,13 +85,12 @@ export default {
           }
         )
         .then(({ data }) => {
-          this.loading = true;
-          console.log(data)
-          this.items = this.items.concat(data.slice(0, 7));
+          if (data) {
+            this.items = this.items.concat(data);
+          }
         })
         .catch(e => {
-          this.loading = false;
-          console.log(e);
+          console.log("get post method unable:"+e);
         });
     },
     scroll() {
@@ -116,6 +105,9 @@ export default {
           document.documentElement.offsetHeight;
 
         if (bottomOfWindow) {
+          this.from = document.getElementById(
+            "scrollViewParent"
+          ).childElementCount;
           this.fetchMore();
         }
       };
@@ -193,7 +185,7 @@ export default {
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  min-height: 180px;
+  min-height: 110px;
   overflow: auto;
   width: 50%;
   cursor: pointer;
@@ -206,11 +198,13 @@ export default {
 
 .pp {
   float: left;
-  margin: 6px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right:8px ;
   display: block;
 }
 .name {
-  margin-top: 15px;
+  margin-top: 20px;
   padding-left: 3px;
   font-size: 18px;
   float: left;
@@ -225,16 +219,20 @@ export default {
 }
 .Post {
   float: left;
+  text-align: left;
+  min-width: 100%;
 }
-
 .postText {
   display: block;
   text-align: left;
-  margin-top: 0px;
-  margin-left: 40px;
-  margin-right: 35px;
-  padding-bottom: 35px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-bottom: 20px;
+  word-break: break-all;
+
 }
+
 .addPostModal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
