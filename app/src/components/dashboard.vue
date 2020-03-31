@@ -7,7 +7,8 @@
       <div class="scrollList">
         <Scroll-view id="scrollViewParent">
           <template slot-scope="visibility">
-            <div class="scrollViewItem" v-for="i in items" :key="i.date" :visibile="visibility">
+            <div class="scrollViewItem"  v-for="i in items" :key="i.date" :visibile="visibility">
+              <div  v-on:click="scrollItemClicked(i)">
               <div class="headInfo">
                 <img class="pp" src="@/assets/user_pp.png" alt="pp" width="40" height="40" />
                 <p class="name">
@@ -17,6 +18,7 @@
               <br />
               <div class="Post">
                 <p class="postText">{{i.posttext}}</p>
+              </div>
               </div>
             </div>
           </template>
@@ -115,6 +117,10 @@ export default {
     addClicked() {
       var addModal = document.getElementById("addPost");
       addModal.style.display = "block";
+    },
+
+    scrollItemClicked(element){
+      console.log(element)
     }
   },
   mounted() {
@@ -190,6 +196,8 @@ export default {
   width: 50%;
   cursor: pointer;
   border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .scrollViewItem:hover {
   border: 1px solid #c5e2c6 !important;
