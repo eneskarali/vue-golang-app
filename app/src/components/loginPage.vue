@@ -7,11 +7,11 @@
       <ul>
         <li>
           <p>Username:</p>
-          <input type="text" />
+          <input id="username_input" type="text" />
         </li>
         <li>
           <p>Password:</p>
-          <input type="password" />
+          <input id="password_input" type="password" />
         </li>
         <li>
           <div class="button" v-on:click="change">
@@ -37,8 +37,8 @@ export default {
   methods: {
     change() {
       const params = {
-        username: "eneskarali",
-        password: "123456"
+        username: document.getElementById("username_input").value,
+        password: document.getElementById("password_input").value
       };
       axios
         .post(

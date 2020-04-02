@@ -48,7 +48,7 @@ h1 {
 .button {
   color: #ffffff !important;
   background: #c74545 ;
-  margin-top: 1px;
+  margin-top: 0px;
   padding-top: 2px;
   padding-bottom: 10px;
   padding-right: 15px;
@@ -59,8 +59,10 @@ h1 {
   font-size: 18px;
   color: black;
   font: bold;
-  margin-left: 89%;
-  margin-right: 50px;
+  position: fixed;
+  float: left;
+  right: 15px;
+  width: 100px;
   max-height: 30px;
 }
 
@@ -78,13 +80,12 @@ h1 {
   margin-right: 13px;
 }
 .logout_text{
-  margin-top: 6px;
+  margin-top: 8px;
 }
 @media (max-width: 800px) {
-  .button{
-    margin-left: 65%;
-    margin-right: 7px;
+  .button{  
     padding-top: 5px;
+    width: 20px;
   }
   .logout_icon{
     width:20px;
@@ -93,6 +94,7 @@ h1 {
   }
   .logout_text{
      margin-top: 2px;
+     display: none;
 }
 }
 </style>

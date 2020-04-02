@@ -63,7 +63,7 @@ export default {
             var modal = document.getElementById("addPost");
             document.getElementById("postText").value = "";
             modal.style.display = "none";
-            location.reload()
+            location.reload();
           }
         })
         .catch(err => {
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style  scoped>
-.modal{
+.modal {
   width: 50%;
   margin: auto;
 }
@@ -164,9 +164,9 @@ h3 {
 }
 
 @media (max-width: 800px) {
-  .modal{
+  .modal {
     width: 80%;
-    margin:4%;
+    margin: 4%;
   }
   .delButton {
     margin-left: 70%;
