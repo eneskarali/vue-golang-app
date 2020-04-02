@@ -36,8 +36,10 @@ export default {
   methods: {
     deleteOnClick() {
       var modal = document.getElementById("addPost");
+      var addComp = document.getElementById("addPostComp")
       document.getElementById("postText").value = "";
       modal.style.display = "none";
+      addComp.style.display = "none";
     },
     shareOnClick() {
       var posttext = document.getElementById("postText").value;
