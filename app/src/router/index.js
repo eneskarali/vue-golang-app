@@ -55,6 +55,17 @@ function getCookie(cname) {
     return null
 }
 
+function refreshToken() {
+    axios
+        .get(
+            "http://localhost:8000/refresh",
+            { withCredentials: true }
+        )
+        .catch(err => {
+            console.log("TOKEN NOT REFRESH: "+err)
+        })
+}
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (getCookie('token') == null) {
@@ -71,10 +82,11 @@ router.beforeEach((to, from, next) => {
                 )
                 .then(response => {
                     if (response.status == 200) {
-                        localStorage.setItem('name',response.data.name)
-                        localStorage.setItem('username',response.data.username)
+                        localStorage.setItem('name', response.data.name)
+                        localStorage.setItem('username', response.data.username)
                         next()
                         document.title = to.meta.title
+                        refreshToken()
                     }
                 })
                 .catch(err => {

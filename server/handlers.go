@@ -182,7 +182,6 @@ func refreshToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 120*time.Second {
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
