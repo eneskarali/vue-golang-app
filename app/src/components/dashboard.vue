@@ -7,18 +7,18 @@
       <div class="scrollList">
         <Scroll-view id="scrollViewParent">
           <template slot-scope="visibility">
-            <div class="scrollViewItem"  v-for="i in items" :key="i.date" :visibile="visibility">
-              <div  v-on:click="scrollItemClicked(i)">
-              <div class="headInfo">
-                <img class="pp" src="@/assets/user_pp.png" alt="pp" width="40" height="40" />
-                <p class="name">
-                  <b>{{i.name}} {{i.surname}}</b>
-                </p>
-              </div>
-              <br />
-              <div class="Post">
-                <p class="postText">{{i.posttext}}</p>
-              </div>
+            <div class="scrollViewItem" v-for="i in items" :key="i.date" :visibile="visibility">
+              <div style="width:100%;height:100%" v-on:click="scrollItemClicked(i)">
+                <div class="headInfo">
+                  <img class="pp" src="@/assets/user_pp.png" alt="pp" width="40" height="40" />
+                  <p class="name">
+                    <b>{{i.name}} {{i.surname}}</b>
+                  </p>
+                </div>
+                <br />
+                <div class="Post">
+                  <p class="postText">{{i.posttext}}</p>
+                </div>
               </div>
             </div>
           </template>
@@ -32,7 +32,12 @@
       </p>
     </div>
     <div id="addPost" class="addPostModal">
-      <addPostModalComp />
+      <addPostModalComp id="addPostComp" style="display:none" />
+      <postDetailComp
+        :detailPostContent = this.detailPostContent
+        id="postDetailComp"
+        style="display:none"
+      />
     </div>
   </div>
 </template>
@@ -40,6 +45,7 @@
 <script>
 import headerComp from "./headerComp.vue";
 import addPostModalComp from "./addPostModalComp.vue";
+import postDetailComp from "./postDetailComp.vue";
 import axios from "axios";
 
 export default {
@@ -49,7 +55,8 @@ export default {
   },
   components: {
     headerComp,
-    addPostModalComp
+    addPostModalComp,
+    postDetailComp
   },
 
   data() {
@@ -58,7 +65,9 @@ export default {
       items: [],
       activeUserName: "",
       to: 10,
-      from: 0
+      from: 0,
+      detailPostContent: {name:"", surname:"",posttext: "",date:"",postcount: ""}
+      
     };
   },
   watch: {
@@ -92,7 +101,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log("get post method unable:"+e);
+          console.log("get post method unable:" + e);
         });
     },
     scroll() {
@@ -114,20 +123,59 @@ export default {
         }
       };
     },
+    timeConverter(UNIX_timestamp) {
+      var a = new Date(UNIX_timestamp * 1000);
+      var months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ];
+      var year = a.getFullYear();
+      var month = months[a.getMonth()];
+      var date = a.getDate();
+      var hour = a.getHours();
+      var min = a.getMinutes();
+      var time =
+        ("0" + date).slice(-2) + " " + month + " " + year + " " + ("0" + hour).slice(-2) + ":" + ("0" + min).slice(-2);
+      return time;
+    },
     addClicked() {
       var addModal = document.getElementById("addPost");
+      var addComp = document.getElementById("addPostComp");
       addModal.style.display = "block";
+      addComp.style.display = "block";
     },
 
-    scrollItemClicked(element){
-      console.log(element)
+    scrollItemClicked(detail) {
+      this.detailPostContent = JSON.parse(JSON.stringify(detail)) ;
+      let date = this.timeConverter(this.detailPostContent.date)
+      this.detailPostContent.date = date 
+      var detailComp = document.getElementById("postDetailComp")
+      var addModal = document.getElementById("addPost");
+      detailComp.style.display = "block"
+      addModal.style.display = "block"
     }
   },
   mounted() {
     this.scroll();
     window.onclick = function(event) {
       var modal = document.getElementById("addPost");
-      if (event.target == modal) modal.style.display = "none";
+      var detailComp = document.getElementById("postDetailComp");
+      var addComp = document.getElementById("addPostComp");
+      if (event.target == modal) {
+        modal.style.display = "none";
+        detailComp.style.display = "none";
+        addComp.style.display = "none";
+      }
     };
 
     if (localStorage.name) {
@@ -208,7 +256,7 @@ export default {
   float: left;
   margin-top: 10px;
   margin-left: 15px;
-  margin-right:8px ;
+  margin-right: 8px;
   display: block;
 }
 .name {
@@ -236,22 +284,21 @@ export default {
   margin-top: 10px;
   margin-left: 20px;
   margin-right: 20px;
-  padding-bottom: 20px;
-  word-break: break-all;
-
+  padding-bottom: 30px;
+  word-break: break-word;
 }
 
 .addPostModal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 13%; /* Location of the box */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top:12%;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
   background-color: rgba(17, 17, 17, 0.5);
 }
 .close {
@@ -277,7 +324,7 @@ export default {
     right: 1%;
   }
   .addPostModal {
-    padding-top: 45%;
+    padding-top: 30%;
   }
 }
 </style>
