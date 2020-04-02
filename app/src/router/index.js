@@ -15,20 +15,25 @@ let router = new Router({
             name: 'helloWorld',
             component: HelloWorld,
             meta: {
-                guest: true
+                guest: true,
+                title: "hello"
             }
         },
         {
             path: '/login',
             name: 'loginPage',
             component: loginPage,
+            meta: {
+                title: "login"
+            }
         },
         {
             path: '/',
             name: 'dashboard',
             component: dashboard,
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                title: "dashboard"
             }
         }
     ]
@@ -53,9 +58,10 @@ function getCookie(cname) {
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (getCookie('token') == null) {
+            document.title = to.meta.title;
             next({
                 path: '/login',
-                params: { nextUrl: to.fullPath }
+                params: { nextUrl: to.fullPath },
             })
         } else {
             axios
@@ -68,6 +74,7 @@ router.beforeEach((to, from, next) => {
                         localStorage.setItem('name',response.data.name)
                         localStorage.setItem('username',response.data.username)
                         next()
+                        document.title = to.meta.title
                     }
                 })
                 .catch(err => {
@@ -76,10 +83,12 @@ router.beforeEach((to, from, next) => {
                         path: '/login',
                         params: { nextUrl: to.fullPath }
                     })
+                    document.title = to.meta.title
                 });
         }
     } else {
         next()
+        document.title = to.meta.title
     }
 
 })
