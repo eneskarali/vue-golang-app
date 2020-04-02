@@ -43,7 +43,7 @@ func getUser(uname string) map[string]string {
 
 }
 
-func createPost(postBy string, postText string, date int64) {
+func createPost(postBy string, postText string, date int64) [2]string {
 
 	db, err := sql.Open("sqlite3", "database")
 	checkErr(err)
@@ -57,10 +57,20 @@ func createPost(postBy string, postText string, date int64) {
 	id, err := res.LastInsertId()
 	checkErr(err)
 
-	fmt.Print(id)
-
 	stat.Close()
+
+	stat, err = db.Prepare("UPDATE user SET postCount = postCount + ? WHERE username = ?")
+	checkErr(err)
+
+	res, err = stat.Exec("1", postBy)
+	checkErr(err)
+
+	affect, err := res.RowsAffected()
+	checkErr(err)
+
 	db.Close()
+
+	return [2]string{strconv.FormatInt(affect, 10), strconv.FormatInt(id, 10)}
 
 }
 
