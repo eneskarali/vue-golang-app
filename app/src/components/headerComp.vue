@@ -3,11 +3,17 @@
     <img class="logo" src="@/assets/login_icon.png" alt="Vue Logo" width="50" height="auto" />
     <h1>timeline</h1>
     <div class="button" v-on:click="logoutOnClick">
-      <img class="logout_icon" src="@/assets/logout_icon.png" alt="add icon" width="30px" height="30px" />
-        <p class="logout_text">
-          <b>logout</b>
-        </p>
-      </div>
+      <img
+        class="logout_icon"
+        src="@/assets/logout_icon.png"
+        alt="add icon"
+        width="30px"
+        height="30px"
+      />
+      <p class="logout_text">
+        <b>logout</b>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -17,11 +23,11 @@ export default {
   props: {
     msg: String
   },
-  methods:{
-    logoutOnClick(){
-      this.$router.push("/login")
-      document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+  methods: {
+    logoutOnClick() {
+      this.$router.push("/login");
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
   }
 };
@@ -47,7 +53,7 @@ h1 {
 }
 .button {
   color: #ffffff !important;
-  background: #c74545 ;
+  background: #c74545;
   margin-top: 0px;
   padding-top: 2px;
   padding-bottom: 10px;
@@ -72,29 +78,29 @@ h1 {
   border-radius: 12px;
   transition: all 0.5s ease 0s;
 }
-.logout_icon{
+.logout_icon {
   display: block;
   float: left;
   margin-top: 2px;
   padding-top: 0;
   margin-right: 13px;
 }
-.logout_text{
+.logout_text {
   margin-top: 8px;
 }
 @media (max-width: 800px) {
-  .button{  
+  .button {
     padding-top: 5px;
     width: 20px;
   }
-  .logout_icon{
-    width:20px;
+  .logout_icon {
+    width: 20px;
     height: 20px;
     margin-right: 6px;
   }
-  .logout_text{
-     margin-top: 2px;
-     display: none;
-}
+  .logout_text {
+    margin-top: 2px;
+    display: none;
+  }
 }
 </style>

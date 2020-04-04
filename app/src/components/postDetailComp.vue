@@ -4,10 +4,9 @@
       <div class="headInfo">
         <img class="pp" src="@/assets/user_pp.png" alt="pp" width="60" height="60" />
         <h2 class="name">
-          <b> {{this.detailPostContent.name}} {{this.detailPostContent.surname}} </b>
+          <b>{{this.detailPostContent.name}} {{this.detailPostContent.surname}}</b>
         </h2>
-        <li class="count"> post count: {{this.detailPostContent.postcount}}</li>
-        
+        <li class="count">post count: {{this.detailPostContent.postcount}}</li>
       </div>
       <br />
       <div class="post">
@@ -24,7 +23,6 @@ export default {
   props: {
     msg: String,
     detailPostContent: {}
-    
   }
 };
 </script>
@@ -46,47 +44,44 @@ export default {
   height: 380px;
   border-radius: 10px;
 }
-.pp{
+.pp {
   float: left;
 }
 
-
-.name{
+.name {
   float: left;
-  margin-top:15px;
-  margin-left: 10px;;
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
-.count{
+.count {
   float: left;
-  margin-top:20px;
-  margin-left: 20px;;
-  color:#888;
+  margin-top: 20px;
+  margin-left: 20px;
+  color: #888;
 }
-.date{
+.date {
   margin-top: 10px;
   float: right;
   margin-right: 15px;
-  
 }
-.post{
+.post {
   height: 75%;
   width: 100%;
   overflow: auto;
 }
-.postText{
+.postText {
   margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
   text-align: left;
   word-break: break-word;
-
 }
 
 @media (max-width: 800px) {
-  .modal{
+  .modal {
     width: 80%;
-    margin:4%;
+    margin: 4%;
   }
 }
 </style>

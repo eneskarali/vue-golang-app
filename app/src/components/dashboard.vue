@@ -34,7 +34,7 @@
     <div id="addPost" class="addPostModal">
       <addPostModalComp id="addPostComp" style="display:none" />
       <postDetailComp
-        :detailPostContent = this.detailPostContent
+        :detailPostContent="this.detailPostContent"
         id="postDetailComp"
         style="display:none"
       />
@@ -66,8 +66,13 @@ export default {
       activeUserName: "",
       to: 10,
       from: 0,
-      detailPostContent: {name:"", surname:"",posttext: "",date:"",postcount: ""}
-      
+      detailPostContent: {
+        name: "",
+        surname: "",
+        posttext: "",
+        date: "",
+        postcount: ""
+      }
     };
   },
   watch: {
@@ -145,7 +150,15 @@ export default {
       var hour = a.getHours();
       var min = a.getMinutes();
       var time =
-        ("0" + date).slice(-2) + " " + month + " " + year + " " + ("0" + hour).slice(-2) + ":" + ("0" + min).slice(-2);
+        ("0" + date).slice(-2) +
+        " " +
+        month +
+        " " +
+        year +
+        " " +
+        ("0" + hour).slice(-2) +
+        ":" +
+        ("0" + min).slice(-2);
       return time;
     },
     addClicked() {
@@ -156,13 +169,13 @@ export default {
     },
 
     scrollItemClicked(detail) {
-      this.detailPostContent = JSON.parse(JSON.stringify(detail)) ;
-      let date = this.timeConverter(this.detailPostContent.date)
-      this.detailPostContent.date = date 
-      var detailComp = document.getElementById("postDetailComp")
+      this.detailPostContent = JSON.parse(JSON.stringify(detail));
+      let date = this.timeConverter(this.detailPostContent.date);
+      this.detailPostContent.date = date;
+      var detailComp = document.getElementById("postDetailComp");
       var addModal = document.getElementById("addPost");
-      detailComp.style.display = "block"
-      addModal.style.display = "block"
+      detailComp.style.display = "block";
+      addModal.style.display = "block";
     }
   },
   mounted() {
@@ -292,7 +305,7 @@ export default {
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top:12%;
+  padding-top: 12%;
   left: 0;
   top: 0;
   width: 100%;

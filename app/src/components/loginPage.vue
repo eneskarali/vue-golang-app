@@ -20,7 +20,7 @@
         </li>
       </ul>
     </div>
-    <div class="alert"> 
+    <div id="alert_div" class="alert">
       <p class="alertText">Username or password is invalid</p>
     </div>
     <div class="footerInfo">
@@ -56,16 +56,12 @@ export default {
         )
         .then(response => {
           console.log("OK!" + response);
+          document.getElementById("alert_div").style.display = "none";
           this.$router.push("/");
         })
         .catch(err => {
-          if (err.status == 401){
-            document.getElementById("alert").style.display = "block"
-          }
-          else{
-          console.log(err);  
-          }
-          
+          console.log(err);
+          document.getElementById("alert_div").style.display = "block";
         });
     }
   }
@@ -150,12 +146,12 @@ input {
   margin-top: 50px;
 }
 
-.alert{
+.alert {
   display: none;
   margin-top: 10px;
 }
 
-.alertText{
+.alertText {
   color: red;
 }
 
