@@ -67,9 +67,10 @@ func signin(w http.ResponseWriter, r *http.Request) {
 	userFromDb := getUser(userCreds.Username)
 
 	expectedPassword, ok := userFromDb["password"]
+	expectedUsername, okusr := userFromDb["username"]
 
 	//kullanıcı adı bulunamadiginda veya sifre ile eslesmediginde unauthorized status dondur
-	if !ok || expectedPassword != userCreds.Password {
+	if !ok || expectedPassword != userCreds.Password || !okusr || expectedUsername != userCreds.Username {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}

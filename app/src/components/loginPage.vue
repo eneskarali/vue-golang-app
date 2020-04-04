@@ -20,8 +20,11 @@
         </li>
       </ul>
     </div>
+    <div class="alert"> 
+      <p class="alertText">Username or password is invalid</p>
+    </div>
     <div class="footerInfo">
-      <p>Bu proje Enes Karali tarafından, Kartaca "Çekirdekten Yetişenler Programı" için geliştirilmiştir.</p>
+      <p>Developed by Enes Karali for Kartaca "Çekirdekten Yetişenler" program.</p>
     </div>
   </div>
 </template>
@@ -56,7 +59,13 @@ export default {
           this.$router.push("/");
         })
         .catch(err => {
-          console.log("sing in service unable:" + err);
+          if (err.status == 401){
+            document.getElementById("alert").style.display = "block"
+          }
+          else{
+          console.log(err);  
+          }
+          
         });
     }
   }
@@ -139,6 +148,15 @@ input {
 
 .logo {
   margin-top: 50px;
+}
+
+.alert{
+  display: none;
+  margin-top: 10px;
+}
+
+.alertText{
+  color: red;
 }
 
 @media (max-width: 800px) {
