@@ -2,7 +2,7 @@ FROM golang:latest
 
 LABEL maintainer="Enes Karali <github.com/eneskarali>"
 
-WORKDIR /app
+WORKDIR /server
 
 COPY go.mod go.sum ./
 
