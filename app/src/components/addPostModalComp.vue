@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <h1>add new post</h1>
+      <h1>a new post</h1>
       <h3>write something and share it...</h3>
       <textarea
         type="text"

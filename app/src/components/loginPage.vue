@@ -3,7 +3,7 @@
     <img class="logo" src="@/assets/login_icon.png" alt="Vue Logo" width="200" height="200" />
     <br />
     <div class="login">
-      <h1>Sing In</h1>
+      <h1>Sign In</h1>
       <ul>
         <li>
           <p>Username:</p>
@@ -15,7 +15,7 @@
         </li>
         <li>
           <div class="button" v-on:click="change">
-            <b>Sing In</b>
+            <b>Sign In</b>
           </div>
         </li>
       </ul>

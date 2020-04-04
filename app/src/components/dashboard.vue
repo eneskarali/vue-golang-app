@@ -28,7 +28,7 @@
     <div class="button" v-on:click="addClicked">
       <img class="add_icon" src="@/assets/add_icon.png" alt="add icon" width="34px" height="34px" />
       <p class="add_text">
-        <b>ADD POST</b>
+        <b>NEW POST</b>
       </p>
     </div>
     <div id="addPost" class="addPostModal">
